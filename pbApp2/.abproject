@@ -1,0 +1,28 @@
+{
+  "ProjectName": "pbApp2",
+  "ProjectGuid": "47e7594e-785e-4601-a2a9-53ed7365c9a1",
+  "projectVersion": 1,
+  "AppIdentifier": "com.telerik.pbApp2",
+  "DisplayName": "pbApp2",
+  "Author": "",
+  "Description": "pbApp2",
+  "BundleVersion": "1.0",
+  "AndroidVersionCode": "1",
+  "iOSDeviceFamily": [
+    "1",
+    "2"
+  ],
+  "iOSBackgroundMode": [],
+  "ProjectTypeGuids": "{F0A65104-D4F4-4012-B799-F612D75820F6}",
+  "AndroidPermissions": [
+    "android.permission.INTERNET"
+  ],
+  "DeviceOrientations": [
+    "Portrait",
+    "Landscape"
+  ],
+  "AndroidHardwareAcceleration": "true",
+  "iOSStatusBarStyle": "Default",
+  "FrameworkVersion": "2.5.0",
+  "Framework": "NativeScript"
+}
