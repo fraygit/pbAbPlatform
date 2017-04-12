@@ -1,156 +1,137 @@
-.km-icon {
-    font-family: 'kendoui';
-    vertical-align: center;
-    horizontal-align: center;
+﻿action-bar {
+  background-color: #443266;
+  color: white;
+}
+.lbl {
+  margin-top: 20;
+  padding-top:10;
+  padding-bottom:10;
+  padding-left:5;
+  background-color:white;
+}
+.drawer-content {
+  background-color: #443266;
+  color: white;
+  padding-top: 20;
+}
+.drawer-content label {
+  font-size: 20;
+  margin: 10 0 15 25;
+}
+.selected {
+  color: #e4ba4e;
 }
 
 page {
-    background-color: #fff;
+    background-color :#F1F0FF;
 }
 
-button {
-    horizontal-align: stretch;
+.font-awesome {
+    font-family: "FontAwesome";
+    font-size:20pt;
 }
 
-image,
-activityindicator {
-    horizontal-align: center;
-    vertical-align: center;
+.home {
+    font-family: 'fontawesome-webfont';
 }
 
-label,
-textfield,
-searchbar,
-switch {
-    vertical-align: center;
-}
-
-switch {
-    horizontal-align: right;
-}
-
-.form-item {
-    padding: 0 12;
-}
-
-.form-label {
-    margin-left: 12;
-}
-
-.form-field {
-    margin: 6 12 6 0;
-}
-
-.form-buttons {
-    padding: 0 6;
-}
-
-.form-link {
-    horizontal-align: center;
-    font-size: 18;
-    margin-top: 10;
-}
-
-.form-item-border {
-    background-color: #ccc;
-    vertical-align: bottom;
-    height: 1;
-}
-
-.ios-form-button {
-    margin: 12 6;
-}
-
-.title {
-    font-size: 30;
-    horizontal-align: center;
-    margin: 20;
-}
-
-.message {
+.fa-camera {
+    font-family: 'fontawesome-webfont';
+    color: orange;
     font-size: 20;
-    color: #284848;
-    horizontal-align: center;
-}
-
-.padded-label {
-    padding: 0 12;
-}
-
-.padded-label-stack {
-    padding: 12;
-}
-
-.title-label {
-    padding: 0 0 12 0;
-    font-weight: bold;
-}
-
-.about-image {
-    horizontal-align: left;
-    vertical-align: top;
-    height: 100;
-    margin-right: 10;
-}
-
-.list-item {
-    padding: 10 16;
-}
-
-.list-icon {
-    width: 36;
     text-align: center;
 }
 
-.h1 {
-    font-size: 32;
+.imagecaptured {
+    margin-right : 5px;
+    margin-left : 5px;
 }
 
-.h2 {
-    font-size: 26;
+.tag-container{
+    margin-left : 10px;
+    margin-right : 10px;
+    border-color: #C3C3E5; border-width: 0 0 1 0;
 }
 
-.h3 {
+.item-name{
+    width: 50%;
+    text-align : center;
+    color: black;
+    font-size: 30pt;
+}
+
+.list-item{
+    padding : 10px;
+    background-color : #f2f2f2;
+    /*#99ccff*/
+    border-color: #C3C3E5; border-width: 0 0 1 0;
+}
+
+.list-item-selected{
+    padding : 10px;
+    background-color : #99ccff;
+    border-color: #C3C3E5; border-width: 0 0 1 0;
+}
+
+.form {
+    color: black;
+    padding : 10px;
+    font-size: 18pt;
+}
+.form-item{
+    border-color: #C3C3E5; 
+    border-width: 0 0 1 0;
+    padding: 15px!important;
+}
+
+.circle-wrapper{
+  background-color: #666666;
+  border-radius: 100;
+  width: 70px;
+}
+
+
+.fa-video {
+    font-family: 'fontawesome-webfont';
+    color: red;
     font-size: 20;
+    text-align: center;
 }
 
-.h4 {
-    font-size: 16;
+.fa-photo {
+    font-family: 'fontawesome-webfont';
+    color: limegreen;
+    font-size: 20;
+    text-align: center;
 }
 
-.h5 {
-    font-size: 12;
+.fa-tag {
+    font-family: 'fontawesome-webfont';
+    color: purple;
+    font-size: 20;
+    text-align: center;
 }
 
-.h6 {
-    font-size: 8;
+.feedItem {
+  margin-top: 20;
+  padding-top:10;
+  padding-bottom:10;
+  padding-left:5;
+  background-color:white;
 }
 
-
-/*Alignment*/
-
-.image-field {
-    height: 50;
-    vertical-align: center;
+.feedAuthor {
+  font-weight:bold;
 }
 
-.alignment-left {
-    horizontal-align: left;
+.feedLB {
+    border-color: #C3C3E5; border-width: 0 0 1 0;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
-.alignment-center {
-    horizontal-align: center;
+.feedComment {
+    text-align: center;
+    font-weight:bold;
 }
 
-.alignment-right {
-    horizontal-align: right;
-}
-
-
-/* START_CUSTOM_CODE_nativeScriptApp */
-
-
-/* Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes */
-
-
-/* END_CUSTOM_CODE_nativeScriptApp */

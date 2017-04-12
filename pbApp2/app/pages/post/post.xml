@@ -1,0 +1,110 @@
+﻿<page
+  xmlns="http://schemas.nativescript.org/tns.xsd"
+  xmlns:drawer="nativescript-telerik-ui/sidedrawer"
+  xmlns:widgets="shared/widgets"
+  xmlns:statusbar="nativescript-statusbar"
+  loaded="pageLoaded">
+
+  <statusbar:StatusBar ios:barStyle="light" />
+
+  <page.actionBar>
+    <action-bar title="Playbook">
+      <NavigationButton text="Go Back" android.systemIcon="ic_menu_back" tap="GoBack"/>
+      <action-bar.actionItems>
+        <ios>
+          <action-item icon="res://ic_menu" ios.position="left" tap="toggleDrawer" />
+        </ios>
+      </action-bar.actionItems>
+      <ActionItem tap="onShare"
+          ios.systemIcon="9" ios.position="left"
+          android.systemIcon="ic_menu_save" android.position="actionBar"/>
+      <ActionItem tap="Post"
+          ios.systemIcon="9" ios.position="left"
+          android.systemIcon="ic_menu_send" android.position="actionBar"/>
+    </action-bar>
+  </page.actionBar>
+
+  <drawer:rad-side-drawer id="drawer">
+    <drawer:rad-side-drawer.mainContent>
+
+      <!-- Home page contents -->
+      <!--<stack-layout loaded="contentLoaded">
+        <image src="https://i.imgur.com/LY3cb3A.png" id="logo" tap="fun" height="100" margin="20 0 0 0" />
+        <label text="Welcome to the NativeScript drawer template! This is the home page. Try tapping the logo." margin="20" horizontalAlignment="center" textWrap="true" />
+      </stack-layout>-->
+
+      <TabView loaded="contentLoaded">
+        <TabView.items>
+          <TabViewItem title="Tag">
+            <TabViewItem.view>
+              <stack-layout style.backgroundColor="white">
+                <ListView items="{{ childrenList }}" height="100%">
+                  <ListView.itemTemplate>
+                    <wrap-layout class="{{ Class }}" tap="SelectChild">
+                      <stack-layout >
+                        <Image src="{{ ProfileImage }}" class="circle-wrapper"></Image>
+                      </stack-layout>
+                      <Label text="{{ Name }}" class="item-name"/>
+                    </wrap-layout>                    
+                  </ListView.itemTemplate>
+                </ListView>
+              </stack-layout>
+            </TabViewItem.view>
+          </TabViewItem>
+          <TabViewItem title="Story">
+            <TabViewItem.view>
+              <stack-layout>
+                <stack-layout>
+                  <grid-layout columns="*, *, *" rows="auto, auto, auto" style.backgroundColor="white" class="home">
+
+                    <TextView hint="Write story" col="0" row="0" colspan="3" height="92%" id="txtStory"/>
+
+                    <wrap-layout col="0" row="1" colspan="3" height="0" id="pnlMedia">
+                    </wrap-layout>
+                    <Label text="&#xf03d;" col="0" row="2" style="margin-top:0;" class="fa-video lbl" tap="OpenGallery"/>
+                    <Label text="&#xf030;" class="fa-camera lbl" col="1" row="2" style="margin-top:0;" tap="OpenCamera"/>
+                    <Label text="&#xf03e;" col="2" row="2" style="margin-top:0;" class="lbl fa-photo" tap="OpenGallery"/>
+                  </grid-layout>
+                </stack-layout>
+
+              </stack-layout>
+            </TabViewItem.view>
+          </TabViewItem>
+          <TabViewItem title="Te Whariki">
+            <TabViewItem.view>
+              <stack-layout style.backgroundColor="white" class="form">
+                <wrap-layout class="form-item">
+                  <Label text="Mana atua (Well-being)" width="70%"/>
+                  <Switch />
+                </wrap-layout>
+                <wrap-layout class="form-item">
+                  <Label text="Mana reo (Communication)" width="70%"/>
+                  <Switch  />
+                </wrap-layout>
+                <wrap-layout class="form-item">
+                  <Label text="Mana auturoa (Exploration)" width="70%"/>
+                  <Switch  />
+                </wrap-layout>
+                <wrap-layout class="form-item">
+                  <Label text="Mana tangata (Contribution)" width="70%"/>
+                  <Switch  />
+                </wrap-layout>
+                <wrap-layout class="form-item">
+                  <Label text="Mana whenua (Belonging)" width="70%"/>
+                  <Switch  />
+                </wrap-layout>
+
+              </stack-layout>
+            </TabViewItem.view>
+          </TabViewItem>
+        </TabView.items>
+      </TabView>      
+
+    </drawer:rad-side-drawer.mainContent>
+    <drawer:rad-side-drawer.drawerContent>
+      <widgets:drawer-content />
+    </drawer:rad-side-drawer.drawerContent>
+  </drawer:rad-side-drawer>
+
+</page>
+
