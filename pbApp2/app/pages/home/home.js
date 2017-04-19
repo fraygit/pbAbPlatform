@@ -3,6 +3,7 @@ var BasePage = require("../../shared/BasePage");
 var topmost = require("ui/frame").topmost;
 var camera = require("nativescript-camera");
 var vr = require("nativescript-videorecorder");
+var appSettings = require("application-settings");
 
 var videorecorder = new vr.VideoRecorder();
 
@@ -31,28 +32,79 @@ var navigationEntry = {
 
 var feed = new observableArray.ObservableArray([]);;
 
-feed.push({
+feed.push(new observableModule.Observable({
     Author: 'fray',
-    Image: "http://www.playcentre.org.nz/Image?Action=View&Image_id=163",
+    Images: new observableArray.ObservableArray([{ Path: "http://www.playcentre.org.nz/Image?Action=View&Image_id=163" }, { Path: "http://www.playcentre.org.nz/Image?Action=View&Image_id=163" }]),
     Date: new Date(),
-    Title: 'Test feed'
-});
+    Content: 'Test feed',
+    ImageCount: 0
+}));
 
-feed.push({
+feed.push(new observableModule.Observable({
     Author: 'Anna',
     Date: new Date(),
-    Image: "https://www.nzgeo.com/wp-content/uploads/1970/01/Playcentre_mowing-1600x1068.jpg",
-    Title: 'Another post'
-});
+    Images: new observableArray.ObservableArray([{ Path: "https://www.nzgeo.com/wp-content/uploads/1970/01/Playcentre_mowing-1600x1068.jpg" }]),
+    Content: 'Another post',
+    ImageCount: 0
+}));
 
 HomePage.prototype.contentLoaded = function (args) {
     var page = args.object;
     pageData.set("Feed", feed);
+
+
+    global.CallSecuredApi("/PostStory", "GET", null, "",
+        function (result) {
+            console.log("stories");
+            console.log(result);
+            var list = JSON.parse(result);
+            console.log(list);
+            console.log(list[0].Content);
+
+            var imageCount = 1;
+
+            for (var i = 0; i < list.length; i++) {
+
+                var storyImages = new observableArray.ObservableArray([]);
+                console.log("media num:" + list[i].Media.length);
+                if (list[i].Media.length > 0) {
+                    console.log("downloading");
+                    for (var y = 0; y < list[i].Media.length; y++) {
+                        console.log("path:" + encodeURIComponent(list[i].Media[y].Path));
+                        console.log("path:" + encodeURIComponent(list[i].Media[y].Filename));
+                        var token = appSettings.getString("token", "");
+                        var imageUrl = global.ApiUrl + "/PostMedia" + '?api_key=' + token + "&path=" + encodeURIComponent(list[i].Media[y].Path) + "&filename=" + list[i].Media[y].Filename;
+                        console.log(imageUrl);
+                        storyImages.push({ Path: imageUrl });
+                    }
+                }
+
+                if (list[i].Media.length > 1) {
+                    imageCount = 2;
+                }
+
+                feed.push(new observableModule.Observable({
+                    Author: list[i].WrittenBy,
+                    Date: global.FormatDate(new Date()),
+                        Images: storyImages,
+                        Content: list[i].Content,
+                        ImageCount: 0
+                }));
+            }
+
+        },
+        function (error) {
+        },
+        function (apiErrorMessage) {
+        });
+
+
     page.bindingContext = pageData;
 };
 
 
 HomePage.prototype.WriteStory = function () {
+    console.log("go to post");
     topmost().navigate(navigationEntry);
 };
 

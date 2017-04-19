@@ -22,6 +22,15 @@
   color: #e4ba4e;
 }
 
+.form-label {
+    font-size: 17pt;
+    margin-left:5px;
+}
+
+.btn {
+    background-color :#F1F0FF;
+}
+
 page {
     background-color :#F1F0FF;
 }
@@ -40,6 +49,10 @@ page {
     color: orange;
     font-size: 20;
     text-align: center;
+}
+
+.fa {
+    font-family: 'fontawesome-webfont';
 }
 
 .imagecaptured {
@@ -135,3 +148,11 @@ page {
     font-weight:bold;
 }
 
+.feed-images {
+    margin:5px;
+}
+
+.feed-images-multi {
+    margin:5px;
+    width: 45%;
+}
