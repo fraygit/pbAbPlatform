@@ -2,6 +2,15 @@ var application = require("application");
 var appSettings = require("application-settings");
 var topmost = require("ui/frame").topmost;
 var http = require("http");
+
+
+if (application.android) {
+    application.onLaunch = function (intent) {
+        console.log('init');
+        //imageCache.initialize();
+    };
+}
+
 //application.start({ moduleName: "pages/home/home" });
 
 
@@ -10,6 +19,7 @@ global.IsBlank = function (str) {
 };
 
 global.ApiUrl = 'http://10.0.2.2:1001/api';
+//global.ApiUrl = 'http://34.209.177.254/api';
 
 var token = appSettings.getString("token", "");
 
@@ -42,7 +52,8 @@ global.CallSecuredApi = function (url, method, param, queryString, resultCallbac
             });
         }
         else {
-            errorApiCallback();
+            console.log('error thrown by api');
+            errorApiCallback(response);
         }
     }, function (e) {
         errorCallback(e);
@@ -53,6 +64,17 @@ global.CallSecuredApi = function (url, method, param, queryString, resultCallbac
         //})
     });
 }
+
+global.GenerateGuid = function () {
+    function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+          .toString(16)
+          .substring(1);
+    }
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+      s4() + '-' + s4() + s4() + s4();
+};
+
 
 global.FormatDate = function (date) {
     var monthNames = [
@@ -68,6 +90,8 @@ global.FormatDate = function (date) {
 
     return day + ' ' + monthNames[monthIndex] + ' ' + year;
 }
+
+console.log("token - " + token);
 
 // Add token validation
 if (!global.IsBlank(token)) {

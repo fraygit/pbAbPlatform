@@ -12,8 +12,9 @@ var fs = require("file-system");
 var imageSource = require("image-source")
 var bghttp = require("nativescript-background-http");
 var appSettings = require("application-settings");
+var imageCacheModule = require("ui/image-cache");
 
-var session = bghttp.session("image-upload");
+var session = bghttp.session("image-upload"); 
 
 var PostPage = function (args) {
     console.log("ok post1.1");
@@ -35,6 +36,11 @@ var capturedImages = [];
 
 var children = new ObservableArray.ObservableArray([]);
 var childrenList = new Observable.Observable();
+var childrenSelected;
+
+var photosCaptured = new ObservableArray.ObservableArray([]);
+var photosList = new Observable.Observable();
+
 
 console.log("ok post");
 
@@ -43,26 +49,101 @@ PostPage.prototype.contentLoaded = function (args) {
     page = args.object;
     page.bindingContext = childrenList;
     children = [];
-    children.push(new Observable.Observable({
-        Name: 'Andy',
-        Id: '123',
-        ProfileImage: 'https://assets.babycenter.com/ims/2016/10/iStock_43693432_4x3.jpg',
-        Class: 'list-item'
-    }));
-    children.push(new Observable.Observable({
-        Name: 'Sam',
-        Id: '456',
-        ProfileImage: 'https://pbs.twimg.com/profile_images/450103729383956480/Tiys3m4x.jpeg',
-        Class: 'list-item'
-    }));
 
-    childrenList.set("childrenList", children);
+
+    photosCaptured = new ObservableArray.ObservableArray([]);
+    //children.push(new Observable.Observable({
+    //    Name: 'Andy',
+    //    Id: '123',
+    //    ProfileImage: 'https://assets.babycenter.com/ims/2016/10/iStock_43693432_4x3.jpg',
+    //    Class: 'list-item'
+    //}));
+    //children.push(new Observable.Observable({
+    //    Name: 'Sam',
+    //    Id: '456',
+    //    ProfileImage: 'https://pbs.twimg.com/profile_images/450103729383956480/Tiys3m4x.jpeg',
+    //    Class: 'list-item'
+    //}));
+
+    var GetImageFromCache = function (imgPath, childItem, imgCallBack) {
+        console.log("start image cache");
+        var cache = new imageCacheModule.Cache();
+        cache.maxRequests = 5;
+        cache.enableDownload();
+
+        var imgSrc;
+
+        var image = cache.get(imgPath);
+        if (image) {
+            console.log("image retrieve");
+            imgSrc = imageSource.fromNativeSource(image);
+            imgCallBack(imgSrc);
+        }
+        else {
+            console.log("image cache push");
+            cache.push({
+                key: imgPath,
+                url: imgPath,
+                completed: function (cachedImage, key) {
+                    console.log("image completed");
+                    console.log("image output: " + JSON.stringify(cachedImage));
+                    if (imgPath === key) {
+                        imgSrc = imageSource.fromNativeSource(cachedImage);
+                        imgCallBack(imgSrc, childItem);
+                    }
+                }
+            });
+        }
+
+    };
+
+    global.CallSecuredApi("/Child", "GET", null, "",
+        function (result) {
+            console.log("get children");
+            console.log(result);
+            var list = JSON.parse(result);
+            console.log(list);
+            var token = appSettings.getString("token", "");
+
+            for (var i = 0; i < list.length; i++) {
+                var filename = 'img_' + new Date().getTime() + '.jpg';
+
+                var imageClass = 'list-item';
+                if (childrenSelected != undefined) {
+                    for (var c = 0; c < childrenSelected.length; c++) {
+                        if (childrenSelected[c] == list[i].Id) {
+                            imageClass = 'list-item-selected';
+                        }
+                    }
+                }
+                var child = new Observable.Observable({
+                    Name: list[i].FirstName,
+                    Id: list[i].Id,
+                    Class: imageClass,
+                    ProfileImage: global.ApiUrl + "/PostMedia" + '?api_key=' + token + "&path=" + encodeURIComponent(list[i].ProfilePhoto) + "&filename=" + filename,
+                });
+                children.push(child);
+
+
+            }
+            childrenList.set("childrenList", children);
+
+        },
+        function (error) {
+        },
+        function (apiErrorMessage) {
+        });
+
+    
     console.log("ok post 3");
 };
 
 PostPage.prototype.SelectChild = function (args) {
     var item = args.object;
     var itemData = item.bindingContext;
+    var tabView1 = page.getViewById("tabView1");
+    tabView1.selectedIndex = 1;
+
     if (itemData.Class == 'list-item') {
         itemData.Class = 'list-item-selected';
     }
@@ -102,12 +183,10 @@ var ReloadImages = function () {
 
     pnlMedia = page.getViewById("pnlMedia");
     txtStory = page.getViewById("txtStory");
-    txtStory.height = "50%";
+    txtStory.height = "44%";
     pnlMedia.height = "42%";
 
     pnlMedia.removeChildren();
-    //console.log("display images");
-    //console.log("selected images : " + selectedImages.length);
 
     var numOfImages = capturedImages.length + selectedImages.length;
     var imgWidth = 100 / numOfImages;
@@ -119,26 +198,44 @@ var ReloadImages = function () {
             newImage.src = capturedImages[i].ImagePath;
             newImage.id = capturedImages[i].Id;
             newImage.class = "imagecaptured";
-            newImage.height = imgWidth + '%';
+            //newImage.height = imgWidth + '%';
+            newImage.height = '100px';
             pnlMedia.addChild(newImage);
+            var newLabel = new label.Label();
+            newLabel.text = " ";
+            pnlMedia.addChild(newLabel);
         }
         for (var i = 0; i < selectedImages.length; i++) {
             var newImage = new image.Image();
-            newImage.src = selectedImages[i].ImagePath;
+            newImage.src = selectedImages[i].Thumb;
             newImage.id = selectedImages[i].Id;
             newImage.class = "imagecaptured";
-            newImage.height = imgWidth + '%';
+            //newImage.height = imgWidth + '%';
+            newImage.height = '100px';
             pnlMedia.addChild(newImage);
+            var newLabel2 = new label.Label();
+            newLabel2.text = " ";
+            pnlMedia.addChild(newLabel2);
         }
     }
     
 };
 
-
+var GetSelectedChildren = function () {
+    childrenSelected = [];
+    for (var c = 0; c < children.length; c++) {
+        if (children[c].Class == "list-item-selected") {
+            childrenSelected.push(children[c].Id);
+            console.log("Selected Child: " + children[c].Name);
+        }
+    }
+};
 
 PostPage.prototype.OpenCamera = function () {
+    GetSelectedChildren();
     camera.requestPermissions();
-    camera.takePicture()
+    var cameraOptions = { width: 300, height: 300, keepAspectRatio: false, saveToGallery: true };
+    camera.takePicture(cameraOptions)
         .then(function (imageAsset) {
             var img = imageAsset
             var savepath = fs.knownFolders.documents().path;
@@ -152,13 +249,17 @@ PostPage.prototype.OpenCamera = function () {
                 var newImageCaptured = { Id: generateGuid(), Image: imageAsset, ImagePath: filepath, Filename: filename };
                 capturedImages.push(newImageCaptured);
                 console.log("image captured:" + filepath);
-                console.log(imageAsset)
+                console.log(imageAsset);
 
+                //var pnlMedia = page.getViewById("pnlMedia");
+                //pnlMedia.bindingContext = photosList;                
+
+                //var photo = new Observable.Observable({ Id: generateGuid(), Image: imageAsset, ImagePath: filepath, Filename: filename });
+                //photosCaptured.push(photo);
+                //photosList.set("photosList", photosCaptured);
+                
                 ReloadImages();
             });
-
-
-
         }).catch(function (err) {
             console.log("Error -> " + err.message);
         });
@@ -166,6 +267,7 @@ PostPage.prototype.OpenCamera = function () {
 
 
 PostPage.prototype.OpenGallery = function () {
+    GetSelectedChildren();
     var context = imagepickerModule.create({
         mode: "multiple"
     });
@@ -179,7 +281,8 @@ PostPage.prototype.OpenGallery = function () {
             console.log("Selection done:");
             selection.forEach(function (selected) {
                 console.log(" - " + selected.uri);
-                var newImageCaptured = { Id: generateGuid(), ImagePath: selected.fileUri, Thumb: selected.thumb };
+                var filename = 'img_' + new Date().getTime() + '.jpg';
+                var newImageCaptured = { Id: generateGuid(), ImagePath: selected.fileUri, Thumb: selected.thumb, Filename: filename };
                 selectedImages.push(newImageCaptured);
 
                 ReloadImages();
@@ -253,6 +356,7 @@ var UploadMedia = function (storyId) {
 PostPage.prototype.Post = function () {
     var isContinuePost = true;
     txtStory = page.getViewById("txtStory");
+    txtTitle = page.getViewById("txtTitle");
     if (global.IsBlank(txtStory.text)) {
         isContinuePost = false;
         dialogs.alert("Can not post story. Story is blank!").then(function () {
@@ -262,11 +366,11 @@ PostPage.prototype.Post = function () {
 
     if (isContinuePost) {
 
-
+        GetSelectedChildren();
 
         //UploadMedia(response.content);
 
-        global.CallSecuredApi("/PostStory", "POST", JSON.stringify({ Title: "Test", Content: txtStory.text, WrittenBy: 'fy' }), "",
+        global.CallSecuredApi("/PostStory", "POST", JSON.stringify({ Title: txtTitle.text, Content: txtStory.text, WrittenBy: 'fy', TaggedChildren: childrenSelected }), "",
             function (result) {
                 console.log("story id: " + result);
                 UploadMedia(result);

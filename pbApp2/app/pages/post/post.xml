@@ -15,9 +15,9 @@
           <action-item icon="res://ic_menu" ios.position="left" tap="toggleDrawer" />
         </ios>
       </action-bar.actionItems>
-      <ActionItem tap="onShare"
+      <!--<ActionItem tap="onShare"
           ios.systemIcon="9" ios.position="left"
-          android.systemIcon="ic_menu_save" android.position="actionBar"/>
+          android.systemIcon="ic_menu_save" android.position="actionBar"/>-->
       <ActionItem tap="Post"
           ios.systemIcon="9" ios.position="left"
           android.systemIcon="ic_menu_send" android.position="actionBar"/>
@@ -33,7 +33,7 @@
         <label text="Welcome to the NativeScript drawer template! This is the home page. Try tapping the logo." margin="20" horizontalAlignment="center" textWrap="true" />
       </stack-layout>-->
 
-      <TabView loaded="contentLoaded">
+      <TabView loaded="contentLoaded" id="tabView1">
         <TabView.items>
           <TabViewItem title="Tag">
             <TabViewItem.view>
@@ -55,15 +55,22 @@
             <TabViewItem.view>
               <stack-layout>
                 <stack-layout>
-                  <grid-layout columns="*, *, *" rows="auto, auto, auto" style.backgroundColor="white" class="home">
+                  <grid-layout columns="*, *, *" rows="auto, auto, auto, auto" style.backgroundColor="white" class="home">
+                    
+                    <TextView hint="Title" col="0" row="0" colspan="3" id="txtTitle"/>
+                    <TextView hint="Write story" col="0" row="1" colspan="3" height="85%" id="txtStory"/>
 
-                    <TextView hint="Write story" col="0" row="0" colspan="3" height="92%" id="txtStory"/>
-
-                    <wrap-layout col="0" row="1" colspan="3" height="0" id="pnlMedia">
+                    <wrap-layout col="0" row="2" colspan="3" height="0" id="pnlMedia">
+                      <Label text="sd"></Label>
+                      <ListView items="{{ photosList }}">
+                        <ListView.itemTemplate>
+                          <Image src="{{ ImagePath }}"></Image>
+                        </ListView.itemTemplate>
+                      </ListView>
                     </wrap-layout>
-                    <Label text="&#xf03d;" col="0" row="2" style="margin-top:0;" class="fa-video lbl" tap="OpenGallery"/>
-                    <Label text="&#xf030;" class="fa-camera lbl" col="1" row="2" style="margin-top:0;" tap="OpenCamera"/>
-                    <Label text="&#xf03e;" col="2" row="2" style="margin-top:0;" class="lbl fa-photo" tap="OpenGallery"/>
+                    <Label text="&#xf03d;" col="0" row="3" style="margin-top:0;" class="fa-video lbl" tap="OpenGallery"/>
+                    <Label text="&#xf030;" class="fa-camera lbl" col="1" row="3" style="margin-top:0;" tap="OpenCamera"/>
+                    <Label text="&#xf03e;" col="2" row="3" style="margin-top:0;" class="lbl fa-photo" tap="OpenGallery"/>
                   </grid-layout>
                 </stack-layout>
 
