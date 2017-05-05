@@ -1,4 +1,6 @@
-﻿action-bar {
+﻿@import 'nativescript-theme-core/css/purple.css';
+
+action-bar {
   background-color: #443266;
   color: white;
 }
@@ -12,7 +14,7 @@
 .drawer-content {
   background-color: #443266;
   color: white;
-  padding-top: 20;
+  padding-top: 0;
 }
 .drawer-content label {
   font-size: 20;
@@ -27,9 +29,21 @@
     margin-left:5px;
 }
 
-.btn {
-    background-color :#F1F0FF;
+.storyImageItem{
+    margin-top:10px;
+    background-color:white;
+    padding:5px;
 }
+
+.lblContent {
+    text-align: justify;
+    text-justify: inter-word;
+    color:black;
+}
+
+/*.btn {
+    background-color :#F1F0FF;
+}*/
 
 page {
     background-color :#F1F0FF;
@@ -56,9 +70,13 @@ page {
 }
 
 .imagecaptured {
-    margin-right : 5px;
-    margin-left : 5px;
-}
+  background-color: #666666;
+  /*border-radius: 100;*/
+  width: 70px;
+  height: 70px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  overflow: hidden;}
 
 .tag-container{
     margin-left : 10px;
@@ -99,8 +117,12 @@ page {
 
 .circle-wrapper{
   background-color: #666666;
-  border-radius: 100;
+  /*border-radius: 100;*/
   width: 70px;
+  height: 70px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  overflow: hidden;
 }
 
 
@@ -137,22 +159,51 @@ page {
   font-weight:bold;
 }
 
+.feedHeader{
+    margin-left:5px;
+}
+
+.feedSmall {
+  font-size:12pt;
+}
+
 .feedLB {
-    border-color: #C3C3E5; border-width: 0 0 1 0;
+    border-color: #C3C3E5; border-width: 1 0 0 0;
     margin-top: 10px;
     margin-bottom: 10px;
 }
 
 .feedComment {
+    border-color: #C3C3E5; border-width: 1 0 0 0;
     text-align: center;
     font-weight:bold;
+    margin-top:5px;
 }
 
 .feed-images {
     margin:5px;
+    max-height:10px;
 }
 
 .feed-images-multi {
     margin:5px;
     width: 45%;
+}
+
+.feed-content {
+    margin-top:10px;
+    margin-bottom:10px;
+}
+
+.menu-header {
+    background-image: ~/images/playcentre.jpg;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    margin:0px!important;
+}
+
+.profilename{
+    position:absolute;
+    bottom:0px;
 }
