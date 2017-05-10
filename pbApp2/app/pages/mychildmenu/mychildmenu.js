@@ -12,43 +12,59 @@ var fs = require("file-system");
 var imageSource = require("image-source")
 var bghttp = require("nativescript-background-http");
 var appSettings = require("application-settings");
-var imageCacheModule = require("ui/image-cache");
 
 var session = bghttp.session("image-upload");
 
-var MyProfilePage = function (args) {
-    console.log("ok profile page");
-
-};
-MyProfilePage.prototype = new BasePage();
-MyProfilePage.prototype.constructor = MyProfilePage;
-
-
-MyProfilePage.prototype.GoBack = function () {
-    topmost().navigate({
-        moduleName: "pages/home/home",
-        animated: true,
-        transition: {
-            name: "slide",
-            duration: 380,
-            curve: "easeIn"
-        }
-    });
-};
-
-MyProfilePage.prototype.GotoEditProfile = function () {
-    topmost().navigate({
-        moduleName: "pages/EditProfile/EditProfile",
-        animated: true,
-        transition: {
-            name: "slide",
-            duration: 380,
-            curve: "easeIn"
-        }
-    });
-};
+var page;
 
 var token = appSettings.getString("token", "");
 
+var MyChildMenuPage = function (args) {
+    console.log("my children page");
+    //var page = args.object;
+    //var params = page.navigationContext;
+    //console.log("image:" + params.image);
+    //if (params.image != null) {
 
-module.exports = new MyProfilePage();
+    //}
+};
+MyChildMenuPage.prototype = new BasePage();
+MyChildMenuPage.prototype.constructor = MyChildMenuPage;
+
+MyChildMenuPage.prototype.pageLoaded = function (args) {
+    page = args.object;
+    var pageContext = page.navigationContext;
+    console.log("child name: " + pageContext.Name);
+    var viewModel = new Observable.Observable({ ActionBarTitle: pageContext.Name.toUpperCase() });
+    args.object.bindingContext = viewModel;
+};
+
+
+MyChildMenuPage.prototype.GoBack = function () {
+    topmost().navigate({
+        moduleName: "pages/mychildren/mychildren",
+        animated: true,
+        transition: {
+            name: "slide",
+            duration: 380,
+            curve: "easeIn"
+        }
+    });
+};
+
+MyChildMenuPage.prototype.GoEnrollment = function () {
+    topmost().navigate({
+        moduleName: "pages/enrollment/enrollment",
+        animated: true,
+        transition: {
+            name: "slide",
+            duration: 380,
+            curve: "easeIn"
+        }
+    });
+};
+
+
+
+module.exports = new MyChildMenuPage();
+

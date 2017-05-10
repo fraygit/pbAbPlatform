@@ -8,7 +8,7 @@
   <statusbar:StatusBar ios:barStyle="light" />
 
   <page.actionBar>
-    <action-bar title="Playbook">
+    <action-bar title="{{ ActionBarTitle }}">
       <NavigationButton text="Go Back" android.systemIcon="ic_menu_back" tap="GoBack"/>
       <action-bar.actionItems>
         <ios>
@@ -24,9 +24,9 @@
       <ScrollView>
 
         <stack-layout>
-          <wrap-layout class="list-item" tap="GotoEditProfile">
+          <wrap-layout class="list-item" tap="GoEnrollment">
             <Label text="&#xf007;" class="fa item-label"/>
-            <Label text="Profile" class="item-label"/>
+            <Label text="Enrollment" class="item-label"/>
           </wrap-layout>
           <wrap-layout class="list-item">
             <Label text="&#xf02d;" class="fa item-label"/>

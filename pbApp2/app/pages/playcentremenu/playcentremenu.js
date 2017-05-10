@@ -16,17 +16,16 @@ var imageCacheModule = require("ui/image-cache");
 
 var session = bghttp.session("image-upload");
 
-var MyProfilePage = function (args) {
+var PlaycentreMenu = function (args) {
     console.log("ok profile page");
 
 };
-MyProfilePage.prototype = new BasePage();
-MyProfilePage.prototype.constructor = MyProfilePage;
+PlaycentreMenu.prototype = new BasePage();
+PlaycentreMenu.prototype.constructor = PlaycentreMenu;
 
-
-MyProfilePage.prototype.GoBack = function () {
+PlaycentreMenu.prototype.GoBack = function () {
     topmost().navigate({
-        moduleName: "pages/home/home",
+        moduleName: "pages/myplaycentre/myplaycentre",
         animated: true,
         transition: {
             name: "slide",
@@ -36,9 +35,9 @@ MyProfilePage.prototype.GoBack = function () {
     });
 };
 
-MyProfilePage.prototype.GotoEditProfile = function () {
+PlaycentreMenu.prototype.GoToMembers = function () {
     topmost().navigate({
-        moduleName: "pages/EditProfile/EditProfile",
+        moduleName: "pages/memberlist/memberlist",
         animated: true,
         transition: {
             name: "slide",
@@ -48,7 +47,5 @@ MyProfilePage.prototype.GotoEditProfile = function () {
     });
 };
 
-var token = appSettings.getString("token", "");
 
-
-module.exports = new MyProfilePage();
+module.exports = new PlaycentreMenu();

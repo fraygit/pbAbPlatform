@@ -8,7 +8,7 @@
   <statusbar:StatusBar ios:barStyle="light" />
 
   <page.actionBar>
-    <action-bar title="Playbook">
+    <action-bar title="My Playcentre">
       <NavigationButton text="Go Back" android.systemIcon="ic_menu_back" tap="GoBack"/>
       <action-bar.actionItems>
         <ios>
@@ -24,13 +24,17 @@
       <ScrollView>
 
         <stack-layout>
-          <wrap-layout class="list-item" tap="GotoEditProfile">
-            <Label text="&#xf007;" class="fa item-label"/>
-            <Label text="Profile" class="item-label"/>
+          <wrap-layout class="list-item" tap="GoToMembers">
+            <Label text="&#xf0c0;" class="fa item-label"/>
+            <Label text="Members" class="item-label"/>
           </wrap-layout>
-          <wrap-layout class="list-item">
-            <Label text="&#xf02d;" class="fa item-label"/>
-            <Label text="Learning Stories" class="item-label"/>
+          <wrap-layout class="list-item" tap="GotoEditProfile">
+            <Label text="&#xf2c3;" class="fa item-label"/>
+            <Label text="Enrollment" class="item-label"/>
+          </wrap-layout>
+          <wrap-layout class="list-item" tap="GotoEditProfile">
+            <Label text="&#xf0e6;" class="fa item-label"/>
+            <Label text="Forum" class="item-label"/>
           </wrap-layout>
 
         </stack-layout>
