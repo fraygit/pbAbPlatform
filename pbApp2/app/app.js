@@ -10,7 +10,6 @@ if (application.android) {
         //imageCache.initialize();
     };
 }
-
 //application.start({ moduleName: "pages/home/home" });
 
 
@@ -19,7 +18,7 @@ global.IsBlank = function (str) {
 };
 
 //global.ApiUrl = 'http://10.0.2.2:1001/api';
-global.ApiUrl = 'http://34.209.177.254/api';
+global.ApiUrl = 'http://api1.myplaybook.co.nz/api';
 
 var token = appSettings.getString("token", "");
 
@@ -28,7 +27,7 @@ global.CallSecuredApi = function (url, method, param, queryString, resultCallbac
     console.log("token:" + token);
     console.log("Call api " + url);
     http.request({
-        url: global.ApiUrl + url + '?api_key=' + token + queryString,
+        url: global.ApiUrl + url + '?api_key=' + encodeURIComponent(token) + queryString,
         method: method,
         headers: { "Content-Type": "application/json" },
         content: param
@@ -94,12 +93,13 @@ global.FormatDate = function (date) {
 console.log("token - " + token);
 
 // Add token validation
-if (!global.IsBlank(token)) {
-    application.start({ moduleName: "pages/home/home" });
-}
-else {
-    application.start({ moduleName: "pages/login/login" });
-}
+//if (!global.IsBlank(token)) {
+//    application.start({ moduleName: "pages/feed/feed" });
+//}
+//else {
+//    application.start({ moduleName: "pages/login/login" });
+//}
+application.start({ moduleName: "pages/feed/feed" });
 
 
 

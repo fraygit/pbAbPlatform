@@ -32,6 +32,10 @@
             <Label text="&#xf02d;" class="fa item-label"/>
             <Label text="Learning Stories" class="item-label"/>
           </wrap-layout>
+          <wrap-layout class="list-item" tap="LinkParent">
+            <Label text="&#xf0c1;" class="fa item-label"/>
+            <Label text="Link Parent" class="item-label"/>
+          </wrap-layout>
 
         </stack-layout>
       </ScrollView>

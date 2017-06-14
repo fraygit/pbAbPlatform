@@ -15,28 +15,31 @@
           <action-item icon="res://ic_menu" ios.position="left" tap="toggleDrawer" />
         </ios>
       </action-bar.actionItems>
-      <ActionItem tap="addPlaycentre"
-          ios.systemIcon="9" ios.position="left"
-          android.systemIcon="ic_input_add" android.position="actionBar"/>
     </action-bar>
   </page.actionBar>
 
   <drawer:rad-side-drawer id="drawer">
     <drawer:rad-side-drawer.mainContent>
 
-      <ScrollView>
+      
 
         <stack-layout>
-          <ListView items="{{ playcentreList }}" height="100%">
-            <ListView.itemTemplate>
-              <wrap-layout class="list-item" tap="GotoPlaycentre">
-                <Label text="{{ Name }}" class="item-label"/>
-              </wrap-layout>
-            </ListView.itemTemplate>
-          </ListView>
+          <stack-layout height="77%">
+            <ListView items="{{ playcentreList }}" height="100%">
+              <ListView.itemTemplate>
+                <wrap-layout class="list-item" tap="GotoPlaycentre">
+                  <Label text="{{ Name }}" class="item-label"/>
+                </wrap-layout>
+              </ListView.itemTemplate>
+            </ListView>
+          </stack-layout>
 
+          <stack-layout>
+            <Button tap="Join" text="Join a playcentre" class="btn btn-primary btn-normal"/>
+            <Button tap="Create" text="Create a new playcentre" class="btn btn-primary btn-normal"/>
+          </stack-layout>
         </stack-layout>
-      </ScrollView>
+      
 
 
     </drawer:rad-side-drawer.mainContent>

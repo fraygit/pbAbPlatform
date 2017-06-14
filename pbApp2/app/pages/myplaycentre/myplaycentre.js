@@ -49,10 +49,25 @@ MyPlaycentre.prototype.pageLoaded = function (args) {
         });
 }
 
+MyPlaycentre.prototype.Create = function () {
+    topmost().navigate({
+        moduleName: "pages/addplaycentre/addplaycentre",
+        animated: true,
+        transition: {
+            name: "slide",
+            duration: 380,
+            curve: "easeIn"
+        }
+    });
+}
+
 MyPlaycentre.prototype.GotoPlaycentre = function (args) {
     var item = args.object;
     var itemData = item.bindingContext;
     console.log("current playcentre " + itemData.Id);
+
+    var playcentreId = appSettings.setString("PlaycentreId", itemData.Id);
+
     topmost().navigate({
         moduleName: "pages/playcentremenu/playcentremenu",
         animated: true,
@@ -64,9 +79,20 @@ MyPlaycentre.prototype.GotoPlaycentre = function (args) {
     });
 }
 
+MyPlaycentre.prototype.Join = function (args) {
+
+    dialogs.alert({
+        title: "Joining an existing playcentre?",
+        message: "To join an existing playcentre, please contact your playcentre administrator and they will add you as a member. Once you are added you will be able to access the playcentre on this page.",
+        okButtonText: "Ok"
+    }).then(function () {
+        console.log("Dialog closed!");
+    });
+}
+
 MyPlaycentre.prototype.GoBack = function () {
     topmost().navigate({
-        moduleName: "pages/home/home",
+        moduleName: "pages/feed/feed",
         animated: true,
         transition: {
             name: "slide",

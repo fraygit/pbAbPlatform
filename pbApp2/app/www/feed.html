@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="./css/app_1.min.css" rel="stylesheet" />
+    <link href="./css/app_2.min.css" rel="stylesheet" />
+    <link href="./css/summernote.css" rel="stylesheet" />
+    <link href="./css/material-design-iconic-font.min.css" rel="stylesheet" />
+    <link href="./css/lightgallery.min.css" rel="stylesheet" />
+    <style type="text/css">
+        .note-editable.panel-body {
+            overflow-y: scroll !important;
+            -webkit-touch-overflow: scroll !important;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .note-toolbar.panel-heading {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <section id="main" style="background:white;padding-left:10px;padding-right:10px;padding-top:10px;padding-bottom:10px">
+        <div class="container" style="padding-left:0px;padding-right:0px;">
+            <div class="row wall">
+                <div class="col-lg-12" style="padding-left:0px!important;padding-right:0px!important;" id="pnlFeed">
+                    &nbsp;&nbsp;&nbsp;&nbsp;loading stories... 
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <script id="template" type="text/template">
+        {{ #Stories }}
+
+            <div class="card w-item">
+                <div class="card-header">
+                    <div class="media">
+                        <div class="pull-left">
+                            <img class="avatar-img" src="./img/placeholder-user.png" alt="">
+                        </div>
+
+                        <ul class="actions" style="display:{{ DisplayEdit }}">
+                            <li class="dropdown action-show">
+                                <a href="" data-toggle="dropdown" aria-expanded="false">
+                                    <i class="zmdi zmdi-more-vert"></i>
+                                </a>
+                                <div class="dropdown-menu pull-right">
+                                    <a data-ma-action="clear-localstorage" href="#" style="font-size:16px;margin-left:10px;"><i class="zmdi zmdi-edit" style="margin-right:12px;"></i>Edit story</a><br />
+                                </div>
+                            </li>
+                        </ul>
+
+                        <div class="media-body">
+                            <h2>
+                                {{ Author }}
+                                <small>Posted on {{ DatePostedFormatted }}</small>
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body card-padding">
+                    <b>{{ Title }}</b>
+
+                    <p id="pnlSummary-{{ Id }}">{{ StoryTextCut }} <a href="javascript:ReadMore('{{ Id }}')" id="lnkReadMore-{{ Id }}">read more..</a></p>
+                    <p id="pnlStory-{{ Id }}" style="display:none;">{{ StoryText }}</p>
+                    
+
+                    <div id="pnlStoryCont-{{ Id }}" style="display:none;">
+                        <p>{{ RecognisingText }}</p>
+
+                        <p>{{ RespondingText }}</p>
+                    </div>
+
+                    <div id="pnlStrands-{{ Id }}" style="display:none;">
+                        <dl class="dl-horizontal">
+                            {{ #Strands }}
+                            <dt><i class="zmdi zmdi-check"></i> {{ Strand }}</dt>
+                            {{ /Strands }}
+                        </dl>
+                    </div>
+
+                    <div id="lightgallery" class="wi-preview lightbox clearfix">
+                        {{ #MediaThumb }}
+                            <div class="wip-item" data-src="{{ ImgUrl }}"
+                                 style="background-image: url({{ ImgUrl }});">
+                                <img src="{{ ImgUrl }}">
+                            </div>
+                        {{ /MediaThumb }}
+                    </div>
+
+                </div>
+            </div>
+        {{ /Stories }}
+    </script>
+
+    <script src="./lib/nativescript-webview-interface.js"></script>
+    <script src="./lib/jquery.min.js"></script>
+    <script src="./lib/bootstrap.min.js"></script>
+    <script src="./lib/summernote-updated.min.js"></script>
+    <script src="./lib/mustache.min.js"></script>
+    <script src="./lib/lightgallery.min.js"></script>
+    <script src="./lib/pulltorefresh.js"></script>
+
+    <script src="./js/feed.js"></script>
+</body>
+</html>

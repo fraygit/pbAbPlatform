@@ -30,7 +30,7 @@ var playcentreList = new Observable.Observable();
 MyPlaycentre.prototype.pageLoaded = function (args) {
     page = args.object;
     page.bindingContext = playcentreList;
-
+    playcentre = [];
     global.CallSecuredApi("/Playcentre", "GET", null, "",
         function (result) {
             var list = JSON.parse(result);
@@ -55,7 +55,24 @@ MyPlaycentre.prototype.GoToPost = function (args) {
 
     console.log("current playcentre" + itemData.Id);
 
+
+
     appSettings.setString("PlaycentreId", itemData.Id);
+
+    topmost().navigate({
+        moduleName: "pages/post/post",
+        animated: true,
+        transition: {
+            name: "slide",
+            duration: 380,
+            curve: "easeIn"
+        }
+    });
+};
+
+
+MyPlaycentre.prototype.Skip = function (args) {
+    appSettings.setString("PlaycentreId", "");
 
     topmost().navigate({
         moduleName: "pages/post/post",
@@ -70,7 +87,7 @@ MyPlaycentre.prototype.GoToPost = function (args) {
 
 MyPlaycentre.prototype.GoBack = function () {
     topmost().navigate({
-        moduleName: "pages/home/home",
+        moduleName: "pages/feed/feed",
         animated: true,
         transition: {
             name: "slide",
